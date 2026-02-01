@@ -62,43 +62,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  yes_button.addEventListener("click", () => {
-    const banner = document.getElementById("banner");
-    if (banner) {
-      banner.src = "images/yes.gif";
-      refreshBanner();
-    }
+yes_button.addEventListener("click", () => {
+  // change banner gif
+  const banner = document.getElementById("banner");
+  banner.src = "images/yes.gif";
+  refreshBanner();
 
-    // Fade out and remove the question heading (robust)
-    const question = document.getElementById("question-heading");
-    if (question) {
-      // ensure we can animate
-      question.style.transition = "opacity 350ms ease";
-      question.style.opacity = "0";
+  // 🔥 REMOVE the question completely
+  const question = document.getElementById("question-heading");
+  if (question) {
+    question.remove();
+  }
 
-      // also set pointer-events none so it can't be selected while fading
-      question.style.pointerEvents = "none";
+  // hide buttons
+  document.querySelector(".buttons").style.display = "none";
 
-      // remove from DOM after fade
-      setTimeout(() => {
-        try {
-          question.remove();
-        } catch (e) {
-          // fallback: hide if remove() not supported
-          question.style.display = "none";
-        }
-      }, 400);
-    }
-
-    // hide buttons
-    const buttons = document.querySelector(".buttons");
-    if (buttons) buttons.style.display = "none";
-
-    // show success message
-    const message = document.querySelector(".message");
-    if (message) message.style.display = "block";
-  });
-
+  // show success message
+  document.querySelector(".message").style.display = "block";
+});
   function refreshBanner() {
     const banner = document.getElementById("banner");
     if (!banner) return;
